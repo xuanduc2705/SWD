@@ -545,7 +545,7 @@ export const FormUpdate = (props) => {
     if (checkId) {
       const response = await actions.update(info);
       if (response) setLoading(false);
-      if (response.status) {
+      if (response.success) {
         if (route) navigate(route + query);
         if (setParams) {
           setParams((pre) => {
@@ -557,9 +557,10 @@ export const FormUpdate = (props) => {
         dispatch(
           setToast({
             ...listToast[0],
-            detail: `Cập nhật ${title || "dữ liệu"} thành công!`,
+            detail: `Đăng kí lịch thành công!`,
           })
         );
+        navigate("/");
       } else
         dispatch(setToast({ ...listToast[1], detail: response.data.mess }));
     } else {
@@ -577,9 +578,10 @@ export const FormUpdate = (props) => {
         dispatch(
           setToast({
             ...listToast[0],
-            detail: `Thêm ${title || "dữ liệu"} thành công!`,
+            detail: `Đăng kí lịch thành công!`,
           })
         );
+        navigate("/");
       } else
         dispatch(setToast({ ...listToast[1], detail: response.data.mess }));
     }
@@ -632,7 +634,7 @@ export const FormUpdate = (props) => {
           ) : (
             ""
           )}
-          {(route || setVisible) && actions && (
+          {actions && (
             <Button
               type="submit"
               raised
@@ -640,18 +642,7 @@ export const FormUpdate = (props) => {
               size="small"
               icon="pi pi-save"
               severity="info"
-              disabled={
-                disabled
-                  ? disabled
-                  : route
-                  ? checkId
-                    ? !permission.includes(route + "/update")
-                    : !permission.includes(route + "/insert")
-                  : true && !setVisible
-              }
-              label={
-                setVisible ? "Xác nhận" : checkId ? "Cập nhật" : "Thêm mới"
-              }
+              label={"Xác nhận"}
             />
           )}
         </div>

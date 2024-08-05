@@ -17,7 +17,11 @@ import ErrorPath from "./module/error/error";
 import { Login } from "./module/login";
 import { useDispatch, useSelector } from "react-redux";
 import { hideToast } from "./redux/features";
+import { Home } from "./module/home";
 import Layout from "./layout";
+import AdminLayout from "./AdminLayout";
+import { UserProfile } from "./module/home/api";
+import { useGetUserProfile } from "./module/home/utils";
 const NavigationScroll = ({ children }) => {
   const location = useLocation();
   const { pathname } = location;
@@ -37,6 +41,7 @@ function App() {
   const toastOptions = useSelector((state) => state.toast);
   const toast = useRef(null);
   const token = localStorage.getItem("token");
+  const data = useGetUserProfile();
   const clientId = localStorage.getItem("clientId");
   const [checkAuth, setCheckAuth] = useState(true);
   const res = useUserInfo();
@@ -56,6 +61,7 @@ function App() {
   //     setCheckAuth(true);
   //   }
   // }, [res]);
+  const adminToken = data?.role;
   console.log(token);
   return (
     <Router>
@@ -66,28 +72,78 @@ function App() {
             const Page = route.component;
             const checkAccessRoute = Boolean(route.public);
             const DefaultLayout = route.layout ? Layout : Fragment;
+            const isAdmin = route?.isAdmin;
+            const AdminLay = route.adminlayout ? AdminLayout : Fragment;
             return (
               <>
-                {token ? (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    element={
-                      route.path !== "/login" ? (
-                        <DefaultLayout>
-                          <Page />
-                        </DefaultLayout>
-                      ) : (
-                        <Navigate to={"/home"} />
-                      )
-                    }
-                  ></Route>
+                {isAdmin ? (
+                  <>
+                    {checkAccessRoute ? (
+                      <>
+                        {token ? (
+                          <>
+                            {!route.token_render && (
+                              <Route
+                                key={index}
+                                path={route.path}
+                                element={
+                                  <AdminLay>
+                                    <Page />
+                                  </AdminLay>
+                                }
+                              ></Route>
+                            )}
+                          </>
+                        ) : (
+                          <Route
+                            key={index}
+                            path={route.path}
+                            element={
+                              <AdminLay>
+                                <Page />
+                              </AdminLay>
+                            }
+                          ></Route>
+                        )}
+                      </>
+                    ) : (
+                      <Route path={errorPage.path} element={<ErrorPath />} />
+                    )}
+                  </>
                 ) : (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    element={<Login />}
-                  ></Route>
+                  <>
+                    {checkAccessRoute ? (
+                      <>
+                        {token ? (
+                          <>
+                            {!route.token_render && (
+                              <Route
+                                key={index}
+                                path={route.path}
+                                element={
+                                  <DefaultLayout>
+                                    <Page />
+                                  </DefaultLayout>
+                                }
+                              ></Route>
+                            )}
+                          </>
+                        ) : (
+                          <Route
+                            key={index}
+                            path={route.path}
+                            element={
+                              <DefaultLayout>
+                                <Page />
+                              </DefaultLayout>
+                            }
+                          ></Route>
+                        )}
+                      </>
+                    ) : (
+                      <Route path={errorPage.path} element={<ErrorPath />} />
+                    )}
+                  </>
                 )}
               </>
             );

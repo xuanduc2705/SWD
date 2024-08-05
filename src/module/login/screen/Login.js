@@ -24,7 +24,7 @@ const Login = () => {
         className="flex justify-content-center font-bold text-4xl	mt-4"
         style={{ color: "#08a6b8" }}
       >
-        Welcome
+        Xin chào mừng!
       </span>
     </div>
   );
@@ -36,8 +36,8 @@ const Login = () => {
   const handleLogin = async () => {
     const response = await LoginApi(username, password);
     if (response.success) {
-      localStorage.setItem("token", response?.data);
-      navigate("/home");
+      localStorage.setItem("token", response?.data?.token);
+      navigate("/");
       window.location.reload();
     } else {
       setCheckpass(true);
@@ -94,7 +94,7 @@ const Login = () => {
                   invalid={checkpass}
                 />
                 <label for="username" className="font-bold text-1xl">
-                  Username
+                  Tên đăng nhập
                 </label>
               </FloatLabel>
               <FloatLabel className="mx-auto">
@@ -112,11 +112,11 @@ const Login = () => {
                     className="font-bold text-1xl"
                     style={{ color: "red" }}
                   >
-                    Password
+                    Mật khẩu
                   </label>
                 ) : (
                   <label for="password" className="font-bold text-1xl ">
-                    Password
+                    Mật khẩu
                   </label>
                 )}
               </FloatLabel>
@@ -126,7 +126,7 @@ const Login = () => {
                     className="flex  mr-4 mt-3 text-center	"
                     style={{ color: "red" }}
                   >
-                    Wrong user information! Please check again!
+                    Sai thông tin đăng nhập! Vui lòng thử lại
                   </span>
                 </div>
               )}

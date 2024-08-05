@@ -39,3 +39,26 @@
 .layout-main {
   margin-top: 10vh;
 }
+.span_header {
+  font-size: 1.5rem;
+  width: 25%;
+  font-weight: 400;
+}
+.span_header_choose {
+  font-size: 1.5rem;
+  width: 25%;
+  font-weight: 600;
+  color: aliceblue;
+  background-color: #ffc419;
+  padding: 7px 10px 7px 10px;
+  border-radius: 2vh;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+.p-menu.p-menu-overlay {
+}
+.p-menu .p-submenu-header {
+  font-size: 1.3rem;
+  margin-left: 20px;
+}

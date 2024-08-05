@@ -7,7 +7,7 @@ const productTemplate = (item) => {
         className=""
         style={{
           width: "100%",
-          aspectRatio: "2.5",
+          aspectRatio: "3",
           borderRadius: "3vh",
         }}
         src={item.src}
@@ -28,7 +28,7 @@ const Banner = () => {
       itemTemplate={productTemplate}
       showIndicators
       autoplayInterval={3000}
-      circular={true}
+      circular
     />
   );
 };
