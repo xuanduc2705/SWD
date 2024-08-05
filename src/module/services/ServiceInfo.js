@@ -11,8 +11,8 @@ const ServiceInfo = (props) => {
   const list_data = list?.filter((e) => e.id == list_location[3])?.[0];
   const doctor = useGetListDoctor();
 
+  const navigate = useNavigate();
   const HandleNavigate = (id) => {
-    const navigate = useNavigate();
     navigate(`/doctor/${id}`);
   };
   return (
