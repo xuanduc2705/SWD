@@ -11,7 +11,7 @@ const DoctorDetail = (props) => {
         <div className="flex flex-row">
           <div
             style={{
-              width: "10%",
+              minWidth: "15%",
               aspectRatio: "1",
               borderRadius: "50%",
               overflow: "hidden",
